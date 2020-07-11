@@ -1,6 +1,10 @@
 package org.shop.db.entity;
 
+import org.shop.dto.OrderDetailDto;
+import org.shop.dto.OrderDto;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderEntity {
     private long id;
@@ -39,5 +43,13 @@ public class OrderEntity {
                 ", client='" + client + '\'' +
                 ", orderDetailEntities=" + orderDetailEntities +
                 '}';
+    }
+
+    public OrderDto toDto(){
+        List<OrderDetailDto> orderDetailDtos = null;
+        if (this.orderDetailEntities != null){
+            orderDetailDtos = this.orderDetailEntities.stream().map(OrderDetailEntity::toDto).collect(Collectors.toList());
+        }
+     return new OrderDto(this.id, this.name, orderDetailDtos );
     }
 }

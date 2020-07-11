@@ -1,6 +1,8 @@
 package org.shop.db.entity;
 
 
+import org.shop.dto.OrderDetailDto;
+
 public class OrderDetailEntity {
     private long id;
     private String name;
@@ -33,4 +35,7 @@ public class OrderDetailEntity {
                 '}';
     }
 
+    public OrderDetailDto toDto(){
+        return new OrderDetailDto(this.id, this.name, this.price);
+    }
 }
