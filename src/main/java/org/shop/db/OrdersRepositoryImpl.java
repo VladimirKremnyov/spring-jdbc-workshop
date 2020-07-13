@@ -2,14 +2,9 @@ package org.shop.db;
 
 import org.shop.db.entity.OrderDetailEntity;
 import org.shop.db.entity.OrderEntity;
-import org.shop.dto.OrderDetailDto;
-import org.shop.dto.OrderDto;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OrdersRepositoryImpl implements OrdersRepository {
     private static final String URL = "jdbc:mysql://localhost:3306/practice_one_jdbc?serverTimezone=UTC";
@@ -18,14 +13,16 @@ public class OrdersRepositoryImpl implements OrdersRepository {
 
     public static void main(String[] args) {
         OrdersRepository ordersRepository = new OrdersRepositoryImpl();
-        ordersRepository.removeOrder(3);
+        ordersRepository.addOrder(new OrderEntity("fffff", "client5",
+                Arrays.asList(new OrderDetailEntity("det5", 15.5),
+                new OrderDetailEntity("det6", 16.5))));
     }
 
     @Override
     public List<OrderEntity> gatAllOrders() {
-        String selectAllOrders = "SELECT o.id AS o_id, o.order_name AS o_name, o.client_name AS o_client_name, " +
-                "od.id AS od_id, od.order_name AS od_name, od.order_price AS od_price, od.order_id AS od_order_id " +
-                "FROM order_entity o LEFT JOIN order_detail_entity od ON o.id = od.order_id;";
+        String selectAllOrders = "SELECT o.order_id AS o_id, o.order_name AS o_name, o.client_name AS o_client_name, " +
+                "od.detail_id AS od_id, od.detail_name AS od_name, od.detail_price AS od_price, od.order_id AS od_order_id " +
+                "FROM order_entity o LEFT JOIN order_detail_entity od ON o.order_id = od.order_id;";
         Map<Long, OrderEntity> idOnDetails = new HashMap<>();
         try {
             Connection connection = connection();
@@ -60,18 +57,28 @@ public class OrdersRepositoryImpl implements OrdersRepository {
     }
 
     @Override
-    public void addOrder(OrderDto orderDto) {
-        String orderID = String.valueOf(orderDto.getId());
-        String orderName = orderDto.getName();
-        List<OrderDetailDto> orderDetailDtos = new ArrayList<>(orderDto.getOrderDetails());
-        try {
-            Connection connection = connection();
-            Statement statement = connection.createStatement();
-
+    public void addOrder(OrderEntity orderEntity) {
+//        String selectOrderID = "SELECT o.order_id FROM order_entity o";
+        String orderName = orderEntity.getName();
+        String clientName = orderEntity.getClient();
+        List<OrderDetailEntity> orderDetailEntityList = new ArrayList<>(orderEntity.getOrderDetailEntities());
+        try (Connection connection = connection(); Statement statement = connection.createStatement()) {
+            connection.setAutoCommit(false);
+            statement.addBatch("INSERT INTO order_entity(order_name, client_name) " +
+                    "VALUES (\"" + orderName + "\", \"" + clientName + "\")");
+//            ResultSet resultSet = statement.executeQuery(selectOrderID);
+//            while (resultSet.next()){
+//                long orderId = resultSet.getLong("order_id");
+//            }
+            for (OrderDetailEntity o : orderDetailEntityList) {
+                statement.addBatch("INSERT INTO order_detail_entity(detail_name, detail_price) " +
+                        "VALUES(\"" + o.getName() + "\", " + o.getPrice() + ")");
+            }
+            statement.executeBatch();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-//        orderDtoList.add(orderDto);
     }
 
     @Override

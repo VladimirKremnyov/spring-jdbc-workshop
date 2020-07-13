@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface OrdersRepository {
     List<OrderEntity> gatAllOrders();
-    void addOrder(OrderDto orderDto);
+    void addOrder(OrderEntity orderEntity);
     void removeOrder(long orderId);
 }

@@ -15,16 +15,4 @@ public class OrderDto {
         this.name = name;
         this.orderDetails = orderDetails;
     }
-
-    public long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public List<OrderDetailDto> getOrderDetails() {
-        return orderDetails;
-    }
 }

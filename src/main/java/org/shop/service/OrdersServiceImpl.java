@@ -2,6 +2,7 @@ package org.shop.service;
 
 import org.shop.db.OrdersRepository;
 import org.shop.db.OrdersRepositoryImpl;
+import org.shop.db.entity.OrderEntity;
 import org.shop.dto.OrderDto;
 
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public void saveOrder(OrderDto orderDto) {
-        ordersRepository.addOrder(orderDto);
+    public void saveOrder(OrderEntity orderEntity) {
+        ordersRepository.addOrder(orderEntity);
     }
 
     @Override

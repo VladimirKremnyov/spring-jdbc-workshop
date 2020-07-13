@@ -14,6 +14,11 @@ public class OrderDetailEntity {
         this.price = price;
     }
 
+    public OrderDetailEntity(String name, double price) {
+        this.name = name;
+        this.price = price;
+    }
+
     public long getId() {
         return id;
     }

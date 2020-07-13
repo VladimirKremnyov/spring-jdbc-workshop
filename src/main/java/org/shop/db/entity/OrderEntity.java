@@ -19,6 +19,12 @@ public class OrderEntity {
         this.orderDetailEntities = orderDetailEntities;
     }
 
+    public OrderEntity(String name, String client, List<OrderDetailEntity> orderDetailEntities) {
+        this.name = name;
+        this.client = client;
+        this.orderDetailEntities = orderDetailEntities;
+    }
+
     public long getId() {
         return id;
     }
