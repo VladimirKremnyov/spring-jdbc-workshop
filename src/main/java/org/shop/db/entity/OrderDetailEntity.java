@@ -1,6 +1,8 @@
 package org.shop.db.entity;
 
 
+import org.shop.dto.OrderDetailDto;
+
 public class OrderDetailEntity {
     private long id;
     private String name;
@@ -8,6 +10,11 @@ public class OrderDetailEntity {
 
     public OrderDetailEntity(long id, String name, double price) {
         this.id = id;
+        this.name = name;
+        this.price = price;
+    }
+
+    public OrderDetailEntity(String name, double price) {
         this.name = name;
         this.price = price;
     }
@@ -33,4 +40,7 @@ public class OrderDetailEntity {
                 '}';
     }
 
+    public OrderDetailDto toDto(){
+        return new OrderDetailDto(this.id, this.name, this.price);
+    }
 }

@@ -1,5 +1,6 @@
 package org.shop.service;
 
+import org.shop.db.entity.OrderEntity;
 import org.shop.dto.OrderDto;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public interface OrdersService {
      */
     OrderDto findOrderBy(long id);
 
-    void saveOrder(OrderDto orderDto);
+    void saveOrder(OrderEntity orderEntity);
 
     void deleteOrder(long orderId);
 
