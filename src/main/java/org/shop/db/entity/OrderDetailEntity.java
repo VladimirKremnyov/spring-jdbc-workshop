@@ -1,13 +1,30 @@
 package org.shop.db.entity;
 
 
+import org.shop.dto.OrderDetailDto;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "order_details")
 public class OrderDetailEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private long id;
+
+    @Column(name = "name", nullable = false)
     private String name;
+
+    @Column(name = "price", nullable = false)
     private double price;
 
-    public OrderDetailEntity(long id, String name, double price) {
-        this.id = id;
+    public OrderDetailEntity() {
+
+    }
+
+    public OrderDetailEntity(String name, double price) {
         this.name = name;
         this.price = price;
     }
@@ -31,6 +48,10 @@ public class OrderDetailEntity {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    public OrderDetailDto toDto() {
+        return new OrderDetailDto(this.id, this.name, this.price);
     }
 
 }
