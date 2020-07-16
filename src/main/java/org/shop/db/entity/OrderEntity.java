@@ -55,6 +55,22 @@ public class OrderEntity {
         return orderDetailEntities;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public void setOrderDetailEntities(List<OrderDetailEntity> orderDetailEntities) {
+        this.orderDetailEntities = orderDetailEntities;
+    }
+
     @Override
     public String toString() {
         return "OrderEntity{" +
