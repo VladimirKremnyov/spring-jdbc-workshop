@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class OrderServiceImpl implements OrdersService {
 
-    private final OrdersRepository ordersRepository;
+    private  static OrdersRepository ordersRepository;
 
     public OrderServiceImpl(OrdersRepository ordersRepository) {
         this.ordersRepository = ordersRepository;
@@ -35,4 +35,22 @@ public class OrderServiceImpl implements OrdersService {
     public void deleteOrder(long orderId) {
         ordersRepository.deleteOrder(ordersRepository.findById(orderId));
     }
+
+    @Override
+    public double findOrderPrice(long orderId) {
+        OrderDto dto=ordersRepository.findById(orderId).toDto();
+        return dto.getOrderDetails().stream().map(element -> element.getPrice()).reduce((double) 0,Double::sum);
+    }
+
+    @Override
+    public List<OrderDto> findBigOrders() {
+        return ordersRepository.findAll().stream().map(OrderEntity::toDto)
+                .filter(element -> element.getOrderDetails().size()>3)
+                .collect(Collectors.toList());
+    }
+
+
+
+
+
 }

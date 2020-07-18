@@ -19,10 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.spy;
 
 @RunWith(JUnit4.class)
-public class OrderServiceImplTest {
+public class OrderServiceImpl1Test {
 
     private static long getID(List<OrderDto> list){
         return  list.get(0).getId();
@@ -44,10 +46,9 @@ public class OrderServiceImplTest {
     public void shouldExecuteMethodFindAllInOrdersRepositoryWhenExecuteMethodFindAllInOrderServiceImpl(){
         //GIVEN
         //WHEN
-        List<OrderDto> result=service.findAll();
         //THEN
 //        Mockito.verify(ordersRepository,times(1)).findAll();
-        assertNotNull(result);
+        assertNotNull(service.findAll());
     }
 
 
@@ -59,11 +60,9 @@ public class OrderServiceImplTest {
         assertNotNull(service.findOrderById(id));
     }
 
-    @Test
+    /*@Test
     public void shouldSaveOrderDtoWhenExecuteMethodSaveOrder(){
         //GIVEN
-        OrdersRepository ordersRepository_1 = spy(context.getBean("ordersRepository", OrdersRepository.class));
-        service=new OrderServiceImpl(ordersRepository_1);
         List<OrderDetailDto> h= new ArrayList<>();
         OrderDetailDto m=new OrderDetailDto("JUNIT",999);
         h.add(m);
@@ -72,15 +71,13 @@ public class OrderServiceImplTest {
         //WHEN
         service.saveOrder(orderDto);
         //THEN
-        Mockito.verify(ordersRepository_1,atLeastOnce()).saveOrder(nbv);
+        Mockito.verify(ordersRepository,atLeastOnce()).saveOrder(nbv);
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
     public void shouldSDeleteOrderDtoWhenExecuteMethodDeleteOrder(){
         //GIVEN
-//        Long id=getID(service.findAll());
-        OrdersRepository ordersRepository_2 = spy(context.getBean("ordersRepository", OrdersRepository.class));
-        service=new OrderServiceImpl(ordersRepository_2);
+        service=new OrderServiceImpl(ordersRepository);
         OrderDto dto=service.findOrderById(id);
         OrderEntity entity=OrderEntity.toEntity(dto);
         //WHEN
@@ -89,6 +86,16 @@ public class OrderServiceImplTest {
 //        Mockito.verify(ordersRepository_2,atLeastOnce()).deleteOrder(entity);
         service.findOrderById(id);
     }
+
+    @Test
+    public void shouldReturnRealBigPricesWhenExecuteMethodFindBigOrders(){
+        //GIVEN
+        //WHEN
+        List<OrderDto> result=service.findBigOrders();
+        boolean count=result.stream().allMatch(element -> element.getOrderDetails().size()>3);
+        //THEN
+        assertTrue(count);
+    }*/
 
 
 
