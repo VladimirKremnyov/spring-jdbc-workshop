@@ -22,17 +22,17 @@ public class OrderServiceImpl implements OrdersService {
     }
 
     @Override
-    public OrderDto findOrderBy(long id) {
-        return null;
+    public OrderDto findOrderById(long id) {
+        return ordersRepository.findById(id).toDto();
     }
 
     @Override
     public void saveOrder(OrderDto orderDto) {
-
+        ordersRepository.saveOrder(new OrderEntity().toEntity(orderDto));
     }
 
     @Override
     public void deleteOrder(long orderId) {
-
+        ordersRepository.deleteOrder(ordersRepository.findById(orderId));
     }
 }

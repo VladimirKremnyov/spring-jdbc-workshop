@@ -15,7 +15,7 @@ public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = true)
     private long id;
 
     @Column(name = "name", nullable = false)
@@ -30,6 +30,12 @@ public class OrderEntity {
 
     public OrderEntity() {
 
+    }
+
+    public OrderEntity(String name, String client, List<OrderDetailEntity> orderDetailEntities) {
+        this.name = name;
+        this.client = client;
+        this.orderDetailEntities = orderDetailEntities;
     }
 
     public OrderEntity(long id, String name, String client, List<OrderDetailEntity> orderDetailEntities) {
@@ -85,6 +91,16 @@ public class OrderEntity {
         List<OrderDetailDto> orderDetailDtos = this.orderDetailEntities == null
                 ? null
                 : this.orderDetailEntities.stream().map(OrderDetailEntity::toDto).collect(toList());
-        return new OrderDto(this.id, this.name, orderDetailDtos);
+        return new OrderDto(this.id, this.name,this.client, orderDetailDtos);
     }
+    public static OrderEntity toEntity(OrderDto dto) {
+
+        List<OrderDetailEntity> orderDetailEntities =
+                dto.getOrderDetails()
+                        .stream()
+                        .map(elements -> new OrderDetailEntity(elements.getId(),elements.getName(),elements.getPrice()))
+                        .collect(toList());
+        return new OrderEntity(dto.getId(), dto.getName(),dto.getClient(), orderDetailEntities);
+    }
+
 }
