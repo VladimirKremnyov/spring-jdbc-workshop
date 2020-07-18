@@ -17,6 +17,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -77,8 +78,8 @@ public class OrderServiceImpl0Test {
     public void shouldSDeleteOrderDtoWhenExecuteMethodDeleteOrder(){
         //GIVEN
         service=new OrderServiceImpl(ordersRepository);
-        OrderDto dto=service.findOrderById(id);
-        OrderEntity entity=OrderEntity.toEntity(dto);
+//        OrderDto dto=service.findOrderById(id);
+//        OrderEntity entity=OrderEntity.toEntity(dto);
         //WHEN
         service.deleteOrder(getID(service.findAll()));
         //THEN
@@ -89,9 +90,12 @@ public class OrderServiceImpl0Test {
     @Test
     public void shouldReturnRealBigPricesWhenExecuteMethodFindBigOrders(){
         //GIVEN
+        Optional<List<OrderDto>> result= Optional.of(service.findBigOrders());
         //WHEN
-        List<OrderDto> result=service.findBigOrders();
-        boolean count=result.stream().allMatch(element -> element.getOrderDetails().size()>3);
+        boolean count=true;
+        if(result.isPresent()){
+         count=result.get().stream().allMatch(element -> element.getOrderDetails().size()>3);}
+        else{ System.err.println("There are no large orders in the database");}
         //THEN
         assertTrue(count);
     }

@@ -29,16 +29,16 @@ public class Main {
 
 //           saveOrder
         System.out.println("SAVE ORDER BEFORE: "+service.findAll().size());
-        List<OrderDetailDto> h= new ArrayList<>();
-        OrderDetailDto m=new OrderDetailDto("NameTest1",1);
-        OrderDetailDto j=new OrderDetailDto("NameTest2",2);
-        OrderDetailDto f=new OrderDetailDto("NameTest3",3);
-        OrderDetailDto g=new OrderDetailDto("NameTest4",4.1);
-        h.add(m);
-        h.add(j);
-        h.add(f);
-        h.add(g);
-        OrderDto orderDto =new OrderDto("TestName","TestClient",h);
+        List<OrderDetailDto> testList= new ArrayList<>();
+        OrderDetailDto test1=new OrderDetailDto("NameTest1",1);
+        OrderDetailDto test2=new OrderDetailDto("NameTest2",2);
+        OrderDetailDto test3=new OrderDetailDto("NameTest3",3);
+        OrderDetailDto test4=new OrderDetailDto("NameTest4",4.1);
+        testList.add(test1);
+        testList.add(test2);
+        testList.add(test3);
+        testList.add(test4);
+        OrderDto orderDto =new OrderDto("TestName","TestClient",testList);
         service.saveOrder(orderDto);
         System.out.println("SAVE ORDER AFTER: "+service.findAll().size());
 
