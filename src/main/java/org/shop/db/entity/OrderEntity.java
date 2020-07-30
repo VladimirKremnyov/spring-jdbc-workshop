@@ -15,6 +15,12 @@ public class OrderEntity {
         this.orderDetailEntities = orderDetailEntities;
     }
 
+    public OrderEntity(String name, String client, List<OrderDetailEntity> orderDetailEntities) {
+        this.name = name;
+        this.client = client;
+        this.orderDetailEntities = orderDetailEntities;
+    }
+
     public long getId() {
         return id;
     }
@@ -33,11 +39,11 @@ public class OrderEntity {
 
     @Override
     public String toString() {
-        return "OrderEntity{" +
+        return "\nOrderEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", client='" + client + '\'' +
-                ", orderDetailEntities=" + orderDetailEntities +
-                '}';
+                ", client='" + client + '\'' + ", orderDetailEntities:\n" +
+                (orderDetailEntities.size()==0 ? "no details" : orderDetailEntities) +
+                "}";
     }
 }

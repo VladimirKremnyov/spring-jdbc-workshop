@@ -2,22 +2,27 @@ package org.shop.db.entity;
 
 
 public class OrderDetailEntity {
-    private long id;
-    private String name;
+    private long detailId;
+    private String detailName;
     private double price;
 
     public OrderDetailEntity(long id, String name, double price) {
-        this.id = id;
-        this.name = name;
+        this.detailId = id;
+        this.detailName = name;
         this.price = price;
     }
 
-    public long getId() {
-        return id;
+    public OrderDetailEntity(String name, double price) {
+        this.detailName = name;
+        this.price = price;
     }
 
-    public String getName() {
-        return name;
+    public long getDetailId() {
+        return detailId;
+    }
+
+    public String getDetailName() {
+        return detailName;
     }
 
     public double getPrice() {
@@ -27,8 +32,8 @@ public class OrderDetailEntity {
     @Override
     public String toString() {
         return "OrderDetailEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "id=" + detailId +
+                ", name='" + detailName + '\'' +
                 ", price=" + price +
                 '}';
     }
