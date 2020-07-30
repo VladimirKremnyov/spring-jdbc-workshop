@@ -17,7 +17,7 @@ public class OrderDetailRepositoryImpl implements OrderDetailsRepository {
     @Override
     public List<OrderDetailEntity> findAllDetailInCurrentOrder(long orderID) {
         List<OrderDetailEntity> detail = new ArrayList<>();
-        String selectquery = "SELECT *FROM orderdetail WHERE order_id="+orderID;
+        String selectquery = "SELECT *FROM orderdetail WHERE order_id=" + orderID;
         try {
             Driver driver = new FabricMySQLDriver();
             DriverManager.registerDriver(driver);
@@ -41,14 +41,34 @@ public class OrderDetailRepositoryImpl implements OrderDetailsRepository {
     }
 
     @Override
-    public OrderDetailEntity findDetailByIDinCurrentOrder(long id) {
+    public OrderDetailEntity findDetailByIDinCurrentOrder(long id, long order_id) {
+
+        String selectquery = "SELECT* FROM orderdetail WHERE id=" + id + " AND order_id=" + order_id;
+        //String selectquery="SELECT* FROM orderdetail WHERE id=1";
+        try {
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+        } catch (SQLException e) {
+            System.out.println("Не удалось загрузить драйвер!!!");
+
+        }
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); Statement statement = connection.createStatement()) {
+
+            ResultSet result = statement.executeQuery(selectquery);
+            while (result.next()) {
+                String name = result.getString("name");
+                Double price = result.getDouble("price");
+                return new OrderDetailEntity(id, name, price);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
         return null;
     }
 
-    @Override
-    public void saveOrderDetailInDB(OrderDetailEntity detailEntity) {
-
-    }
 
     @Override
     public void deleteOrderDetailFromDB(long orderId) {

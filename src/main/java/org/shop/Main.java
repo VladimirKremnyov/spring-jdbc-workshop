@@ -20,7 +20,8 @@ public class Main {
         OrderDetailRepositoryImpl orderDetailRepository=new OrderDetailRepositoryImpl();
 
         //System.out.println(orderDetailRepository.findAllDetailInCurrentOrder(2));
-        System.out.println(new OrderRepositoryImpl().findAllOrdersInDB());
+        //System.out.println(new OrderRepositoryImpl().findAllOrdersInDB());
+        System.out.println(new OrderDetailRepositoryImpl().findDetailByIDinCurrentOrder(3,2));
     }
 
 }
