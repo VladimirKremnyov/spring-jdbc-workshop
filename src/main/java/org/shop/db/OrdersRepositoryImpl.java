@@ -89,7 +89,6 @@ public class OrdersRepositoryImpl implements OrdersRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.print("No such order in DB! ");
         return null;
     }
 
@@ -133,7 +132,7 @@ public class OrdersRepositoryImpl implements OrdersRepository {
             conn.setAutoCommit(false);
             stmnt.addBatch(deleteOrderByIdQuery);
             stmnt.addBatch(deleteOrderDetailsByIdQuery);
-            System.out.println(stmnt.executeBatch());
+            stmnt.executeBatch();
             conn.commit();
             return true;
         } catch (SQLException e) {

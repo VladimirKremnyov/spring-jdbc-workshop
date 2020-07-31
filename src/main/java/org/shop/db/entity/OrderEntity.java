@@ -1,6 +1,9 @@
 package org.shop.db.entity;
 
+import org.shop.dto.OrderDto;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderEntity {
     private long id;
@@ -35,6 +38,11 @@ public class OrderEntity {
 
     public List<OrderDetailEntity> getOrderDetailEntities() {
         return orderDetailEntities;
+    }
+
+    public OrderDto toOrderDto() {
+        return new OrderDto(id, name, client,
+                orderDetailEntities.stream().map(OrderDetailEntity::toDetailDto).collect(Collectors.toList()));
     }
 
     @Override

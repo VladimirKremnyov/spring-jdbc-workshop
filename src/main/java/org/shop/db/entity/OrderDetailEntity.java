@@ -1,6 +1,8 @@
 package org.shop.db.entity;
 
 
+import org.shop.dto.OrderDetailDto;
+
 public class OrderDetailEntity {
     private long detailId;
     private String detailName;
@@ -29,6 +31,10 @@ public class OrderDetailEntity {
         return price;
     }
 
+    public OrderDetailDto toDetailDto() {
+        return new OrderDetailDto(detailId, detailName, price);
+    }
+
     @Override
     public String toString() {
         return "OrderDetailEntity{" +
@@ -37,5 +43,4 @@ public class OrderDetailEntity {
                 ", price=" + price +
                 '}';
     }
-
 }
