@@ -44,7 +44,7 @@ public class OrderDetailRepositoryImpl implements OrderDetailsRepository {
     public OrderDetailEntity findDetailByIDinCurrentOrder(long id, long order_id) {
 
         String selectquery = "SELECT* FROM orderdetail WHERE id=" + id + " AND order_id=" + order_id;
-        //String selectquery="SELECT* FROM orderdetail WHERE id=1";
+
         try {
             Driver driver = new FabricMySQLDriver();
             DriverManager.registerDriver(driver);

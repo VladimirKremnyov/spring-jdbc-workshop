@@ -17,11 +17,12 @@ public class Main {
         orderDetailEntities.add(orderDetail2);
         OrderEntity orderEntity1=new OrderEntity(1,"Computer Parts","Ivanov",orderDetailEntities);
 
-        OrderDetailRepositoryImpl orderDetailRepository=new OrderDetailRepositoryImpl();
+      //  OrderDetailRepositoryImpl orderDetailRepository=new OrderDetailRepositoryImpl();
 
-        //System.out.println(orderDetailRepository.findAllDetailInCurrentOrder(2));
-        //System.out.println(new OrderRepositoryImpl().findAllOrdersInDB());
-        System.out.println(new OrderDetailRepositoryImpl().findDetailByIDinCurrentOrder(3,2));
+//        System.out.println(orderDetailRepository.findAllDetailInCurrentOrder(2));
+//        System.out.println(new OrderRepositoryImpl().findAllOrdersInDB());
+//        System.out.println(new OrderDetailRepositoryImpl().findDetailByIDinCurrentOrder(3,2));
+        System.out.println(new OrderRepositoryImpl().findOrderByID(2));
     }
 
 }

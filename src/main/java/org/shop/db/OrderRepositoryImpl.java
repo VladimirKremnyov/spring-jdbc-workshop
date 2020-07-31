@@ -47,7 +47,28 @@ public class OrderRepositoryImpl implements OrdersRepository {
 
     @Override
     public OrderEntity findOrderByID(long id) {
-        return null;
+        OrderEntity order = null;
+        String selectquery = "SELECT *FROM `order`WHERE id=" + id;
+        try {
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+        } catch (SQLException e) {
+            System.out.println("Не удалось загрузить драйвер!!!");
+
+        }
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); Statement statement = connection.createStatement()) {
+
+            ResultSet result = statement.executeQuery(selectquery);
+            while (result.next()) {
+                String name = result.getString("name");
+                String client = result.getString("client");
+                order = new OrderEntity(id, name, client, new OrderDetailRepositoryImpl().findAllDetailInCurrentOrder(id));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return order;
+
     }
 
     @Override
