@@ -18,7 +18,13 @@ public class OrdersRepositoryImpl implements OrdersRepository {
     private static final String PASSWORD = "root";
 
     private Connection connection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override

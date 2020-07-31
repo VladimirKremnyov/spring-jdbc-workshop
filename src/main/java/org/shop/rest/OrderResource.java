@@ -16,7 +16,6 @@ public class OrderResource {
 
     @GetMapping(produces = "application/json")
     public List<OrderEntity> findAll() {
-        System.out.println("hello from findAll!");
         return ordersRepository.getOrderList();
     }
 
