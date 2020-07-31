@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OrdersRepositoryImpl implements OrdersRepository {
-    private static final String URL = "jdbc:mysql://localhost:3306/hw5_jdbc?serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://localhost:3306/hw5_jdbc?useUnicode=true&serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
 
