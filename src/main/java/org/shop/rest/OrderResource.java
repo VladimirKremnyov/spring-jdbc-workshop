@@ -33,7 +33,7 @@ public class OrderResource {
 
     @PutMapping
     public void updateOrder(@RequestBody OrderDto orderDto) {
-        System.out.println("Updated employee " + orderDto);
+        System.out.println("Updated order " + orderDto);
     }
 
     @DeleteMapping
