@@ -39,11 +39,12 @@ public class Main {
 
 
 
-       OrderDetailRepositoryImpl orderDetailRepository=new OrderDetailRepositoryImpl();
-//        OrderRepositoryImpl orderRepository=new OrderRepositoryImpl();
-//        orderRepository.saveOrderInDB(orderEntity3);
+       //OrderDetailRepositoryImpl orderDetailRepository=new OrderDetailRepositoryImpl();
+       OrderRepositoryImpl orderRepository=new OrderRepositoryImpl();
+      orderRepository.deleteOrderFromDB(4);
 //        orderDetailRepository.saveOrderDetailInDB(orderEntity3);
-        orderDetailRepository.deleteOrderDetailFromDB(orderEntity3,1);
+        //orderDetailRepository.deleteOrderDetailFromDB(orderEntity3,1);
+
 
     }
 
