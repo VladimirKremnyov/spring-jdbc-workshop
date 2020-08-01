@@ -73,7 +73,24 @@ public class OrderRepositoryImpl implements OrdersRepository {
 
     @Override
     public void saveOrderInDB(OrderEntity orderEntity) {
+        long id = orderEntity.getId();
+        String name = orderEntity.getName();
+        String client = orderEntity.getClient();
+        String savequery = "INSERT INTO shopdb.`order`(id,name, client) VALUES "+"("+ id +"," +"'"+name+"'" +","+"'" +client+"'" +")";
 
+        try {
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+        } catch (SQLException e) {
+            System.out.println("Не удалось загрузить драйвер!!!");
+
+        }
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); Statement statement = connection.createStatement()) {
+
+            statement.execute(savequery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

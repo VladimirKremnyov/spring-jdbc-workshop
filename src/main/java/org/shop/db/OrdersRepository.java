@@ -18,7 +18,7 @@ public interface OrdersRepository {
 
 
 
-// this method returns the order by its ID and orders detail
+// this method returns the order by its ID
 
     OrderEntity findOrderByID(long id);
 
