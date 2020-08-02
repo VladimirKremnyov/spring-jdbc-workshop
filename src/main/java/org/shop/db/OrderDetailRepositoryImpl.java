@@ -69,11 +69,109 @@ public class OrderDetailRepositoryImpl implements OrderDetailsRepository {
         return null;
     }
 
-
     @Override
-    public void deleteOrderDetailFromDB(long orderId) {
+    public void saveOrderDetailInDB(OrderEntity orderEntity) {
+        List<OrderDetailEntity> listOffDetail = orderEntity.getOrderDetailEntities();
+        Long order_id = orderEntity.getId();
+        String name;
+        Double price;
+
+        try {
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+        } catch (SQLException e) {
+            System.out.println("Не удалось загрузить драйвер!!!");
+
+        }
+        for (OrderDetailEntity detail : listOffDetail) {
+
+            name = detail.getName();
+            price = detail.getPrice();
+            String savequery = "INSERT INTO shopdb.`orderdetail`(order_id,name, price) VALUES " + "(" + order_id + "," + "'" + name + "'" + "," + "'" + price + "'" + ")";
+            try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); Statement statement = connection.createStatement()) {
+
+                statement.execute(savequery);
+                //connection.commit();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
+
+
+    @Override
+    public void deleteOrderDetailFromDB(OrderEntity orderEntity, long detailId) {
+
+        Long order_id = orderEntity.getId();
+        String name;
+        Double price;
+
+        try {
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+        } catch (SQLException e) {
+            System.out.println("Не удалось загрузить драйвер!!!");
+
+        }
+
+        String deletequery = "DELETE FROM shopdb.`orderdetail`WHERE order_id=" + order_id + " AND id=" + detailId;
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); Statement statement = connection.createStatement()) {
+
+            statement.executeUpdate(deletequery);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void deleteOllOrderDetailFromDB(OrderEntity order) {
+        Long orderId = order.getId();
+        try {
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+        } catch (SQLException e) {
+            System.out.println("Не удалось загрузить драйвер!!!");
+
+        }
+
+        String deletequery = "DELETE FROM shopdb.`orderdetail` WHERE order_id=" + orderId;
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); Statement statement = connection.createStatement()) {
+
+            statement.executeUpdate(deletequery);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    @Override
+    public void deleteOllDetailFromDB(Long orderEntityID) {
+        try {
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+        } catch (SQLException e) {
+            System.out.println("Не удалось загрузить драйвер!!!");
+
+        }
+
+        String deletequery = "DELETE FROM shopdb.`orderdetail` WHERE order_id=" + orderEntityID;
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); Statement statement = connection.createStatement()) {
+
+            statement.executeUpdate(deletequery);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
 
 

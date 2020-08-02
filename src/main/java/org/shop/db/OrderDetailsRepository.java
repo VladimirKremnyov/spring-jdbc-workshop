@@ -18,9 +18,21 @@ public interface OrderDetailsRepository {
 // this method returns details by id
 
     OrderDetailEntity findDetailByIDinCurrentOrder(long id,long order_id);
+    // this method saves the order to the database
+
+    void saveOrderDetailInDB(OrderEntity orderEntity);
 
 
 // this method removes the orders detail from the database
 
-    void deleteOrderDetailFromDB(long orderId);
+
+    void deleteOrderDetailFromDB(OrderEntity order,long detailId);
+
+    // this method removes oll orders detail from the database
+
+    void deleteOllOrderDetailFromDB(OrderEntity order);
+
+    // this method removes oll orders detail from the database
+
+    void deleteOllDetailFromDB(Long orderEntityID);
 }

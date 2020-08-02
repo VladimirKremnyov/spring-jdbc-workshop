@@ -12,7 +12,6 @@ public interface OrdersService {
     List<OrderDto> findAll();
 
     /**
-     *
      * @param id - order unique identifier
      * @return order and its' details
      */

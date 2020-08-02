@@ -73,10 +73,12 @@ public class OrderRepositoryImpl implements OrdersRepository {
 
     @Override
     public void saveOrderInDB(OrderEntity orderEntity) {
+        OrderDetailRepositoryImpl orderDetailRepository = new OrderDetailRepositoryImpl();
+
         long id = orderEntity.getId();
         String name = orderEntity.getName();
         String client = orderEntity.getClient();
-        String savequery = "INSERT INTO shopdb.`order`(id,name, client) VALUES "+"("+ id +"," +"'"+name+"'" +","+"'" +client+"'" +")";
+        String savequery = "INSERT INTO shopdb.`order`(id,name, client) VALUES " + "(" + id + "," + "'" + name + "'" + "," + "'" + client + "'" + ")";
 
         try {
             Driver driver = new FabricMySQLDriver();
@@ -88,6 +90,7 @@ public class OrderRepositoryImpl implements OrdersRepository {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); Statement statement = connection.createStatement()) {
 
             statement.execute(savequery);
+            orderDetailRepository.saveOrderDetailInDB(orderEntity);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -95,6 +98,27 @@ public class OrderRepositoryImpl implements OrdersRepository {
 
     @Override
     public void deleteOrderFromDB(long orderId) {
+        OrderDetailRepositoryImpl orderDetailRepository = new OrderDetailRepositoryImpl();
+        orderDetailRepository.deleteOllDetailFromDB(orderId);
+        try {
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);
+        } catch (SQLException e) {
+            System.out.println("Не удалось загрузить драйвер!!!");
+
+        }
+
+        String deletequery = "DELETE FROM shopdb.`order`WHERE id=" + orderId;
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD); Statement statement = connection.createStatement()) {
+
+            statement.executeUpdate(deletequery);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 
     }
+
 }
+
