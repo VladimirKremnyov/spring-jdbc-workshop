@@ -11,9 +11,9 @@ public class OrderDetailDto {
     private double price;
 
 
-    public OrderDetailDto(OrderDetailEntity orderDetailEntity) {
-        this.id=orderDetailEntity.getId();
-        this.name=orderDetailEntity.getName();
-        this.price=orderDetailEntity.getPrice();
+    public OrderDetailDto(long id, String name, double price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
     }
 }

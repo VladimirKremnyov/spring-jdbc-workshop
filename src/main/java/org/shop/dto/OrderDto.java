@@ -13,10 +13,11 @@ public class OrderDto {
     private String client;
     private List<OrderDetailDto> orderDetails;
 
-    public OrderDto(OrderEntity orderEntity,List<OrderDetailDto>orderDetails) {
-        this.id = orderEntity.getId();
-        this.name = orderEntity.getName();
-        this.client=orderEntity.getClient();
+    public OrderDto(long id, String name, String client, List<OrderDetailDto> orderDetails) {
+        this.id = id;
+        this.name = name;
+        this.client = client;
         this.orderDetails = orderDetails;
     }
 }
+
