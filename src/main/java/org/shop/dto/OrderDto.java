@@ -19,5 +19,31 @@ public class OrderDto {
         this.client = client;
         this.orderDetails = orderDetails;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public List<OrderDetailDto> getOrderDetails() {
+        return orderDetails;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", client='" + client + '\'' +
+                ", orderDetails=" + orderDetails +
+                '}';
+    }
 }
 
