@@ -9,7 +9,7 @@ import java.util.List;
 public class Converter {
     private static List<OrderDetailDto> listOrderDetailDto;
     private static List<OrderDetailEntity> listOrderDetailEntity;
-    private OrderDetailDto orderDetailDto;
+
 
 
     public static OrderDetailEntity DetaildtoConvertToDetailEntity(OrderDetailDto orderDetailDto) {
