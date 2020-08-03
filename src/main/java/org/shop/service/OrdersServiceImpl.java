@@ -1,16 +1,20 @@
 package org.shop.service;
 
 import org.shop.db.OrdersRepository;
-import org.shop.db.OrdersRepositoryImpl;
 import org.shop.db.entity.OrderEntity;
 import org.shop.dto.OrderDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class OrdersServiceImpl implements OrdersService {
+    private OrdersRepository ordersRepository;
 
-    private OrdersRepository ordersRepository = new OrdersRepositoryImpl();
+    public OrdersServiceImpl(OrdersRepository ordersRepository) {
+        this.ordersRepository = ordersRepository;
+    }
 
     @Override
     public List<OrderDto> findAll() {
@@ -19,7 +23,7 @@ public class OrdersServiceImpl implements OrdersService {
     }
 
     @Override
-    public OrderDto findOrderBy(long id) {
+    public OrderDto findOrderById(long id) {
         try {
             return ordersRepository.getOrderByID(id).toOrderDto();
         } catch (NullPointerException npe) {

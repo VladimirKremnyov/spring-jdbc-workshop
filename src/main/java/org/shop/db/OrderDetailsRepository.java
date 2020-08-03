@@ -13,9 +13,9 @@ public interface OrderDetailsRepository {
 
     List<OrderDetailEntity> getOrderDetailList(long orderId);
 
-    OrderDetailEntity getDetailByID (long orderId, long detailId);
+    OrderDetailEntity getDetailByID(long orderId, long detailId);
 
-    void addDetailToOrder (long orderId, OrderDetailEntity orderDetail);
+    void addDetailToOrder(long orderId, OrderDetailEntity orderDetail);
 
-    boolean deleteDetailFromOrder (long orderId, long detailId);
+    boolean deleteDetailFromOrder(long orderId, long detailId);
 }

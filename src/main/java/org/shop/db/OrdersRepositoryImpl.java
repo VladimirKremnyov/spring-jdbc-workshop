@@ -4,6 +4,7 @@ import org.shop.db.entity.OrderDetailEntity;
 import org.shop.db.entity.OrderEntity;
 import org.shop.dto.OrderDetailDto;
 import org.shop.dto.OrderDto;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,19 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Repository
 public class OrdersRepositoryImpl implements OrdersRepository {
-    private static final String URL = "jdbc:mysql://localhost:3306/hw5_jdbc?useUnicode=true&serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
 
-    private Connection connection() throws SQLException {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection(URL, USER, PASSWORD);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
+    Connection conn;
+
+    public OrdersRepositoryImpl(Connection conn) {
+        this.conn = conn;
     }
 
     @Override
@@ -35,7 +30,7 @@ public class OrdersRepositoryImpl implements OrdersRepository {
                 "order_details_table.price, order_details_table.orderID " +
                 "from order_table left join order_details_table " +
                 "on order_table.id=order_details_table.orderID;";
-        try (Connection conn = connection(); Statement stmnt = conn.createStatement()) {
+        try (Statement stmnt = conn.createStatement()) {
             ResultSet resultOrderSet = stmnt.executeQuery(selectAllOrdersQuery);
             while (resultOrderSet.next()) {
                 long orderId = resultOrderSet.getLong("order_table.id");
@@ -71,7 +66,7 @@ public class OrdersRepositoryImpl implements OrdersRepository {
                 "order_details_table.price, order_details_table.orderID " +
                 "from order_table left join order_details_table " +
                 "on order_table.id=order_details_table.orderID where order_table.id = %d;", id);
-        try (Connection conn = connection(); Statement stmnt = conn.createStatement()) {
+        try (Statement stmnt = conn.createStatement()) {
             ResultSet resultSetForSoughtOrder = stmnt.executeQuery(selectOrderByIdQuery);
             while (resultSetForSoughtOrder.next()) {
                 if (orderName == null || client == null) {
@@ -103,7 +98,7 @@ public class OrdersRepositoryImpl implements OrdersRepository {
         String preparedInsertionDetailQuery = "insert into order_details_table (name, price, orderID) values (?, ?, ?)";
         List<OrderDetailEntity> orderDetailEntities =
                 orderDto.getOrderDetails().stream().map(OrderDetailDto::toDetailEntity).collect(Collectors.toList());
-        try (Connection conn = connection(); Statement stmnt = conn.createStatement()) {
+        try (Statement stmnt = conn.createStatement()) {
             stmnt.executeUpdate(addOrderQuery);
             ResultSet rs = stmnt.executeQuery(selectOrderByNameQuery);
             while (rs.next()) {
@@ -128,7 +123,7 @@ public class OrdersRepositoryImpl implements OrdersRepository {
     public boolean deleteOrderFromDB(long id) {
         String deleteOrderByIdQuery = String.format("delete from order_table where order_table.id = %d;", id);
         String deleteOrderDetailsByIdQuery = String.format("delete from order_details_table where order_details_table.orderID = %d;", id);
-        try (Connection conn = connection(); Statement stmnt = conn.createStatement()) {
+        try (Statement stmnt = conn.createStatement()) {
             conn.setAutoCommit(false);
             stmnt.addBatch(deleteOrderByIdQuery);
             stmnt.addBatch(deleteOrderDetailsByIdQuery);

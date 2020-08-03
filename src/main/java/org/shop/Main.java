@@ -1,19 +1,15 @@
 package org.shop;
 
-import org.shop.db.OrdersRepository;
-import org.shop.db.OrdersRepositoryImpl;
-import org.shop.dto.OrderDetailDto;
-import org.shop.dto.OrderDto;
 import org.shop.service.OrdersService;
-import org.shop.service.OrdersServiceImpl;
-
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
     public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(SpringContext.class);
 //        OrdersRepository ordersRepository = new OrdersRepositoryImpl();
-        OrdersService ordersService = new OrdersServiceImpl();
+//        OrdersService ordersService = new OrdersServiceImpl();
+        OrdersService ordersService = context.getBean(OrdersService.class);
 //        System.out.println(ordersRepository.getOrderList());
 //        System.out.println(ordersService.findAll());
 //        System.out.println(ordersService.findOrderBy(8));
@@ -23,13 +19,14 @@ public class Main {
 //        ordersRepository.addOrderToDB(orderDto);
 //        ordersService.saveOrder(orderDto);
 //        System.out.println(ordersRepository.getOrderByID(10));
-        System.out.println(ordersService.findOrderBy(12));
+//        System.out.println(ordersService.findOrderBy(13));
 
-//        ordersRepository.deleteOrderFromDB(10);
-        ordersService.deleteOrder(12);
-        System.out.println(ordersService.findOrderBy(12));
+//        ordersRepository.deleteOrderFromDB(12);
+        ordersService.deleteOrder(13);
+        System.out.println(ordersService.findOrderById(13));
 
 //        System.out.println(ordersRepository.getOrderByID(10));
 //        System.out.println(ordersRepository.getOrderList());
+        System.out.println(ordersService.findAll());
     }
 }
