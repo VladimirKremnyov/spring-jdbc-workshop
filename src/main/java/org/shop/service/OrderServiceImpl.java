@@ -8,15 +8,20 @@ import org.shop.dto.OrderDto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderServiceImpl implements OrdersService{
+public class OrderServiceImpl implements OrdersService {
 
+    private OrderRepositoryImpl orderRepository;
+
+    public OrderServiceImpl(OrderRepositoryImpl orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     @Override
     public List<OrderDto> findAll() {
-List<OrderEntity>orderEntityList=new OrderRepositoryImpl().findAllOrdersInDB();
-List<OrderDto>orderDtoList=new ArrayList<>();
-        for (OrderEntity order:orderEntityList
-             ) {
+        List<OrderEntity> orderEntityList = orderRepository.findAllOrdersInDB();
+        List<OrderDto> orderDtoList = new ArrayList<>();
+        for (OrderEntity order : orderEntityList
+        ) {
             orderDtoList.add(Converter.OrderEntityConvertToOrderDto(order));
 
         }
@@ -30,13 +35,13 @@ List<OrderDto>orderDtoList=new ArrayList<>();
 
     @Override
     public void saveOrder(OrderDto orderDto) {
-        new OrderRepositoryImpl().saveOrderInDB(Converter.OrderDtoConvertToOrderEntity(orderDto));
+        orderRepository.saveOrderInDB(Converter.OrderDtoConvertToOrderEntity(orderDto));
 
     }
 
     @Override
     public void deleteOrder(long orderId) {
-        new OrderRepositoryImpl().deleteOrderFromDB(orderId);
+        orderRepository.deleteOrderFromDB(orderId);
 
     }
 }
