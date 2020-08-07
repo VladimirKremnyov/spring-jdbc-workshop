@@ -17,6 +17,8 @@ public class Main {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("spring/application-context.xml");
         System.out.println(context.getBean( OrderServiceImpl.class).findAll());
+        context.getBean(OrderServiceImpl.class).deleteOrder(1);
+
     }
 
 }

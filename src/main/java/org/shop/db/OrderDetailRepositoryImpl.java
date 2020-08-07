@@ -3,10 +3,13 @@ package org.shop.db;
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import org.shop.db.entity.OrderDetailEntity;
 import org.shop.db.entity.OrderEntity;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+@Component
 
 public class OrderDetailRepositoryImpl implements OrderDetailsRepository {
 

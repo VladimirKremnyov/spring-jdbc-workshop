@@ -3,6 +3,7 @@ package org.shop.db;
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import org.shop.db.entity.OrderDetailEntity;
 import org.shop.db.entity.OrderEntity;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,11 +14,15 @@ public class OrderRepositoryImpl implements OrdersRepository {
     private static final String URL = "jdbc:mysql://localhost:3306/shopdb?useSSL=false";
     private static final String USER = "root";
     private static final String PASSWORD = "root";
+    OrderDetailRepositoryImpl orderDetailRepository;
+
+    public OrderRepositoryImpl(OrderDetailRepositoryImpl orderDetailRepository) {
+        this.orderDetailRepository = orderDetailRepository;
+    }
 
     @Override
     public List<OrderEntity> findAllOrdersInDB() {
-
-        List<OrderEntity> orders = new ArrayList<>();
+     List<OrderEntity> orders = new ArrayList<>();
         String selectquery = "SELECT *FROM `order`";
         try {
             Driver driver = new FabricMySQLDriver();
@@ -31,7 +36,6 @@ public class OrderRepositoryImpl implements OrdersRepository {
             ResultSet result = statement.executeQuery(selectquery);
             while (result.next()) {
                 long id = result.getLong("id");
-                OrderDetailRepositoryImpl orderDetailRepository = new OrderDetailRepositoryImpl();
                 List<OrderDetailEntity> orderDetailEntittes = orderDetailRepository.findAllDetailInCurrentOrder(id);
                 String name = result.getString("name");
                 String client = result.getString("client");
@@ -73,8 +77,6 @@ public class OrderRepositoryImpl implements OrdersRepository {
 
     @Override
     public void saveOrderInDB(OrderEntity orderEntity) {
-        OrderDetailRepositoryImpl orderDetailRepository = new OrderDetailRepositoryImpl();
-
         long id = orderEntity.getId();
         String name = orderEntity.getName();
         String client = orderEntity.getClient();
@@ -98,7 +100,6 @@ public class OrderRepositoryImpl implements OrdersRepository {
 
     @Override
     public void deleteOrderFromDB(long orderId) {
-        OrderDetailRepositoryImpl orderDetailRepository = new OrderDetailRepositoryImpl();
         orderDetailRepository.deleteOllDetailFromDB(orderId);
         try {
             Driver driver = new FabricMySQLDriver();
