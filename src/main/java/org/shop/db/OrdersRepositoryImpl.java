@@ -97,7 +97,7 @@ public class OrdersRepositoryImpl implements OrdersRepository {
                 "from order_table where order_table.name = '%s';", orderName);
         String preparedInsertionDetailQuery = "insert into order_details_table (name, price, orderID) values (?, ?, ?)";
         List<OrderDetailEntity> orderDetailEntities =
-                orderDto.getOrderDetails().stream().map(OrderDetailDto::toDetailEntity).collect(Collectors.toList());
+                orderDto.getOrderDetailDtos().stream().map(OrderDetailDto::toDetailEntity).collect(Collectors.toList());
         try (Statement stmnt = conn.createStatement()) {
             stmnt.executeUpdate(addOrderQuery);
             ResultSet rs = stmnt.executeQuery(selectOrderByNameQuery);
