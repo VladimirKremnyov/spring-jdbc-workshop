@@ -5,6 +5,7 @@ import org.shop.db.entity.OrderEntity;
 import org.shop.dto.OrderDto;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,8 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public List<OrderDto> findAll() {
         return ordersRepository.getOrderList().stream()
-                .map(OrderEntity::toOrderDto).collect(Collectors.toList());
+                .map(OrderEntity::toOrderDto).sorted(Comparator.comparing(odto -> odto.getId()))
+                .collect(Collectors.toList());
     }
 
     @Override

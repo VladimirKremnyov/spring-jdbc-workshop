@@ -3,40 +3,38 @@ package org.shop;
 import org.shop.db.OrderDetailsRepository;
 import org.shop.db.OrderDetailsRepositoryImpl;
 import org.shop.db.entity.OrderDetailEntity;
+import org.shop.dto.OrderDetailDto;
+import org.shop.dto.OrderDto;
 import org.shop.service.OrdersService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
+
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringContext.class);
-//        OrdersRepository ordersRepository = new OrdersRepositoryImpl();
-//        OrdersService ordersService = new OrdersServiceImpl();
         OrdersService ordersService = context.getBean(OrdersService.class);
-//        System.out.println(ordersRepository.getOrderList());
-//        System.out.println(ordersService.findAll());
-//        System.out.println(ordersService.findOrderBy(8));
-//        List <OrderDetailDto> orderDetailDtos = Arrays.asList(new OrderDetailDto("detail1", 11.48),
+
+//        List<OrderDetailDto> orderDetailDtos = Arrays.asList
+//                (new OrderDetailDto("detail1", 11.48),
 //                new OrderDetailDto("detail3", 25.77));
 //        OrderDto orderDto = new OrderDto("order10", "client7", orderDetailDtos);
-//        ordersRepository.addOrderToDB(orderDto);
 //        ordersService.saveOrder(orderDto);
-//        System.out.println(ordersRepository.getOrderByID(10));
-//        System.out.println(ordersService.findOrderBy(13));
 
-//        ordersRepository.deleteOrderFromDB(12);
-//        ordersService.deleteOrder(13);
-//        System.out.println(ordersService.findOrderById(13));
+//        ordersService.deleteOrder(19);
+//        System.out.println(ordersService.findOrderById(15));
 
-//        System.out.println(ordersRepository.getOrderByID(10));
-//        System.out.println(ordersRepository.getOrderList());
-//        System.out.println(ordersService.findAll());
-        OrderDetailsRepository orderDetailsRepository = context.getBean(OrderDetailsRepository.class);
-        System.out.println(orderDetailsRepository.getDetailByID(21));
+//        OrderDetailsRepository orderDetailsRepository = context.getBean(OrderDetailsRepository.class);
+//        System.out.println(orderDetailsRepository.getDetailByID(21));
+
 //        OrderDetailEntity orderDetail = new OrderDetailEntity("detail5", 43.15);
 //        orderDetailsRepository.addDetailToOrder(3, orderDetail);
 //        orderDetailsRepository.deleteDetailFromOrder(23);
-        System.out.println(ordersService.findOrderById(3));
+//        System.out.println(ordersService.findOrderById(3));
 
+        System.out.println(ordersService.findAll());
     }
 }

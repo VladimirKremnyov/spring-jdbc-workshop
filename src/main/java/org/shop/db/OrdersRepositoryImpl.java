@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Repository
 public class OrdersRepositoryImpl implements OrdersRepository {
 
-    Connection conn;
+    private Connection conn;
 
     public OrdersRepositoryImpl(Connection conn) {
         this.conn = conn;
@@ -105,15 +105,15 @@ public class OrdersRepositoryImpl implements OrdersRepository {
                 orderId = rs.getLong("order_table.id");
             }
             PreparedStatement preparedStatement = conn.prepareStatement(preparedInsertionDetailQuery);
-            int rows = 0;
+//            int rows = 0;
             for (OrderDetailEntity orderDetailEntity : orderDetailEntities) {
                 preparedStatement.setString(1, orderDetailEntity.getDetailName());
                 preparedStatement.setDouble(2, orderDetailEntity.getPrice());
                 preparedStatement.setLong(3, orderId);
                 preparedStatement.executeUpdate();
-                rows++;
+//                rows++;
             }
-            System.out.println("Quantity of added order details: " + rows);
+//            System.out.println("Quantity of added order details: " + rows);
         } catch (SQLException e) {
             e.printStackTrace();
         }
