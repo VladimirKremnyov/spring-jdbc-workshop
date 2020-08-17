@@ -2,6 +2,7 @@ package org.shop.dto;
 
 import org.shop.db.entity.OrderDetailEntity;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -10,20 +11,20 @@ import java.util.Objects;
 public class OrderDetailDto {
     private long detailDtoId;
     private String detailDtoName;
-    private double detailDtoPrice;
+    private BigDecimal detailDtoPrice;
 
-    public OrderDetailDto(long detailDtoId, String detailDtoName, double detailDtoPrice) {
+    public OrderDetailDto(String detailDtoName, BigDecimal detailDtoPrice) {
+        this.detailDtoName = detailDtoName;
+        this.detailDtoPrice = detailDtoPrice;
+    }
+
+    public OrderDetailDto(long detailDtoId, String detailDtoName, BigDecimal detailDtoPrice) {
         this.detailDtoId = detailDtoId;
         this.detailDtoName = detailDtoName;
         this.detailDtoPrice = detailDtoPrice;
     }
 
-    public OrderDetailDto(String detailDtoName, double detailDtoPrice) {
-        this.detailDtoName = detailDtoName;
-        this.detailDtoPrice = detailDtoPrice;
-    }
-
-    public OrderDetailEntity toDetailEntity () {
+    public OrderDetailEntity toDetailEntity() {
         return new OrderDetailEntity(this.detailDtoName, this.detailDtoPrice);
     }
 
@@ -33,7 +34,7 @@ public class OrderDetailDto {
         if (o == null || getClass() != o.getClass()) return false;
         OrderDetailDto that = (OrderDetailDto) o;
         return detailDtoId == that.detailDtoId &&
-                Double.compare(that.detailDtoPrice, detailDtoPrice) == 0 &&
+                detailDtoPrice.compareTo(that.detailDtoPrice) == 0 &&
                 Objects.equals(detailDtoName, that.detailDtoName);
     }
 

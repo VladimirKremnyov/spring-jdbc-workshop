@@ -20,7 +20,7 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public List<OrderDto> findAll() {
         return ordersRepository.getOrderList().stream()
-                .map(OrderEntity::toOrderDto).sorted(Comparator.comparing(odto -> odto.getId()))
+                .map(OrderEntity::toOrderDto).sorted(Comparator.comparing(OrderDto::getId))
                 .collect(Collectors.toList());
     }
 

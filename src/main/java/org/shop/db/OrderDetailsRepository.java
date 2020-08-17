@@ -10,11 +10,11 @@ import java.util.List;
  */
 public interface OrderDetailsRepository {
 
-    List<OrderDetailEntity> getOrderDetailList(long orderId);
+    List<OrderDetailEntity> getOrderDetailList(Long orderId);
 
-    OrderDetailEntity getDetailByID(long detailId);
+    OrderDetailEntity getDetailByID(Long detailId);
 
-    void addDetailToOrder(long orderId, OrderDetailEntity orderDetail);
+    void addDetailToOrder(Long orderId, OrderDetailEntity orderDetail);
 
-    void deleteDetailFromOrder(long detailId);
+    void deleteDetailFromOrder(Long detailId);
 }

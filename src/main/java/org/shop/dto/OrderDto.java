@@ -1,44 +1,42 @@
 package org.shop.dto;
 
+import org.shop.db.entity.OrderDetailEntity;
+import org.shop.db.entity.OrderEntity;
+
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * feel free to add any code to this class
  */
 public class OrderDto {
-    private long id;
+    private Long id;
     private String name;
     private String client;
     private List<OrderDetailDto> orderDetailDtos;
 
-    public OrderDto(long id, String name, String client, List<OrderDetailDto> orderDetails) {
+    public OrderDto(String name, String client, List<OrderDetailDto> orderDetailDtos) {
+        this.name = name;
+        this.client = client;
+        this.orderDetailDtos = orderDetailDtos;
+    }
+
+    public OrderDto(Long id, String name, String client, List<OrderDetailDto> orderDetails) {
         this.id = id;
         this.name = name;
         this.client = client;
         this.orderDetailDtos = orderDetails;
     }
 
-    public OrderDto(String name, String client, List<OrderDetailDto> orderDetails) {
-        this.name = name;
-        this.client = client;
-        this.orderDetailDtos = orderDetails;
-    }
-
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getClient() {
-        return client;
-    }
-
-    public List<OrderDetailDto> getOrderDetailDtos() {
-        return orderDetailDtos;
+    public OrderEntity toOrderEntity() {
+        return new OrderEntity(id, name, client,
+                orderDetailDtos.stream()
+                        .map(OrderDetailDto::toDetailEntity).collect(Collectors.toList()));
     }
 
     @Override
@@ -46,7 +44,7 @@ public class OrderDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDto orderDto = (OrderDto) o;
-        return id == orderDto.id &&
+        return id.equals(orderDto.id) &&
                 Objects.equals(name, orderDto.name) &&
                 Objects.equals(client, orderDto.client) &&
                 Objects.equals(orderDetailDtos, orderDto.orderDetailDtos);
@@ -63,7 +61,7 @@ public class OrderDto {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", client='" + client + '\'' + ", orderDetailDtos:\n" +
-                (orderDetailDtos.size()==0 ? "no details" : orderDetailDtos) +
+                (orderDetailDtos.size() == 0 ? "no details" : orderDetailDtos) +
                 "}";
     }
 }
