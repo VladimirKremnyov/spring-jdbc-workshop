@@ -29,8 +29,10 @@ public class OrderServiceImpl implements OrdersService {
 
     @Override
     public OrderDto findOrderBy(long id) {
-        return null;
+
+        return Converter.OrderEntityConvertToOrderDto(orderRepository.findOrderByID(id));
     }
+
 
     @Override
     public void saveOrder(OrderDto orderDto) {
