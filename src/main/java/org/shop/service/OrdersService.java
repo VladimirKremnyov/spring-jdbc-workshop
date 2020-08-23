@@ -16,7 +16,7 @@ public interface OrdersService {
      * @param id - order unique identifier
      * @return order and its' details
      */
-    OrderDto findOrderBy(long id);
+    OrderDto findOrderById(long id);
 
     void saveOrder(OrderDto orderDto);
 

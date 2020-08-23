@@ -52,3 +52,4 @@ public class OrdersServiceImplTest {
         verify(mockedOrdersRepository).deleteOrderFromDB(randomId);
         verifyNoMoreInteractions(mockedOrdersRepository);
     }
+}

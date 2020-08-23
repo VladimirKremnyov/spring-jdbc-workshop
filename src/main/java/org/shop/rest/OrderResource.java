@@ -1,9 +1,7 @@
 package org.shop.rest;
 
-import org.shop.db.OrdersRepository;
-import org.shop.db.OrdersRepositoryImpl;
-import org.shop.db.entity.OrderEntity;
 import org.shop.dto.OrderDto;
+import org.shop.service.OrdersService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,23 +10,24 @@ import java.util.List;
 @RequestMapping("orders")
 public class OrderResource {
 
-    private OrdersRepository ordersRepository = new OrdersRepositoryImpl();
+    private OrdersService ordersService;
 
-    @GetMapping(produces = "application/json")
-    public List<OrderEntity> findAll() {
-        System.out.println("hello from findAll!");
-        return ordersRepository.getOrderList();
+    @GetMapping//(produces = "application/json")
+    public List<OrderDto> findAll() {
+        return ordersService.findAll();
     }
 
-    @GetMapping(value = "{id}", produces = "application/json")
-    public OrderEntity findOrderById(@PathVariable("id") long id) {
-        return ordersRepository.getOrderByID(id);
+    @GetMapping(value = "{id}")
+    public OrderDto findOrderById(@PathVariable("id") long id) {
+        return ordersService.findOrderById(id);
     }
 
     @PostMapping
-    public void addOrder(@RequestBody OrderDto orderDto) {
-        ordersRepository.addOrderToDB(orderDto);
+    public void addOrder(OrderDto orderDto) {
+        System.out.println(ordersService.findAll());
+        ordersService.saveOrder(orderDto);
         System.out.println("Added order: " + orderDto);
+        System.out.println(ordersService.findAll());
     }
 
     @PutMapping
@@ -38,8 +37,9 @@ public class OrderResource {
 
     @DeleteMapping
     public void deleteOrder(@RequestBody long id) {
-        ordersRepository.deleteOrderFromDB(id);
+        System.out.println(ordersService.findAll());
+        ordersService.deleteOrder(id);
         System.out.println("Deleted order's ID " + id);
+        System.out.println(ordersService.findAll());
     }
-
 }

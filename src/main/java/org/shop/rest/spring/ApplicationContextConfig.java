@@ -6,4 +6,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan("org.shop")
 public class ApplicationContextConfig {
+
+
+
 }
