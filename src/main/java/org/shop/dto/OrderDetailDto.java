@@ -24,6 +24,30 @@ public class OrderDetailDto {
         this.detailDtoPrice = detailDtoPrice;
     }
 
+    public long getDetailDtoId() {
+        return detailDtoId;
+    }
+
+    public void setDetailDtoId(long detailDtoId) {
+        this.detailDtoId = detailDtoId;
+    }
+
+    public String getDetailDtoName() {
+        return detailDtoName;
+    }
+
+    public void setDetailDtoName(String detailDtoName) {
+        this.detailDtoName = detailDtoName;
+    }
+
+    public BigDecimal getDetailDtoPrice() {
+        return detailDtoPrice;
+    }
+
+    public void setDetailDtoPrice(BigDecimal detailDtoPrice) {
+        this.detailDtoPrice = detailDtoPrice;
+    }
+
     public OrderDetailEntity toDetailEntity() {
         return new OrderDetailEntity(this.detailDtoName, this.detailDtoPrice);
     }

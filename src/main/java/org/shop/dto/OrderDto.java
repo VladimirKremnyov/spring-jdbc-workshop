@@ -33,6 +33,34 @@ public class OrderDto {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public List<OrderDetailDto> getOrderDetailDtos() {
+        return orderDetailDtos;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
+    }
+
+    public void setOrderDetailDtos(List<OrderDetailDto> orderDetailDtos) {
+        this.orderDetailDtos = orderDetailDtos;
+    }
+
     public OrderEntity toOrderEntity() {
         return new OrderEntity(id, name, client,
                 orderDetailDtos.stream()
