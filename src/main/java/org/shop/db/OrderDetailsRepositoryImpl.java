@@ -1,51 +1,54 @@
 package org.shop.db;
 
 import org.shop.db.entity.OrderDetailEntity;
+import org.shop.db.entity.OrderEntity;
+import org.springframework.stereotype.Repository;
 
-import java.sql.*;
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 import java.util.List;
 
+@Repository
 public class OrderDetailsRepositoryImpl implements OrderDetailsRepository {
-    private static final String URL = "jdbc:mysql://localhost:3306/hw5_jdbc?serverTimezone=UTC";
-    private static final String USER = "root";
-    private static final String PASSWORD = "root";
 
-    private Connection connection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    private final EntityManagerFactory entityManagerFactory;
+
+    public OrderDetailsRepositoryImpl(EntityManagerFactory entityManagerFactory) {
+        this.entityManagerFactory = entityManagerFactory;
     }
 
     @Override
-    public List<OrderDetailEntity> getOrderDetailList(long orderId) {
-        List<OrderDetailEntity> orderDetailEntities = new ArrayList<>();
-        String selectAllDetailsOfThisOrdersQuery = "SELECT * FROM order_details_table WHERE orderID = " + orderId;
-        try (Connection conn = connection(); Statement stmnt = conn.createStatement()) {
-            ResultSet resultSetOfOrderDetails = stmnt.executeQuery(selectAllDetailsOfThisOrdersQuery);
-            while (resultSetOfOrderDetails.next()) {
-                    long detailId = resultSetOfOrderDetails.getLong("id");
-                    String detailName = resultSetOfOrderDetails.getString("name");
-                    double price = resultSetOfOrderDetails.getDouble("price");
-                    orderDetailEntities.add(new OrderDetailEntity(detailId, detailName, price));
-            }
-            return orderDetailEntities;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public List<OrderDetailEntity> getOrderDetailList(Long orderId) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        return entityManager.createQuery("from OrderDetailEntity where orderID=:orderID")
+                .setParameter("orderID", orderId).getResultList();
     }
 
     @Override
-    public OrderDetailEntity getDetailByID(long orderId, long detailId) {
-        return null;
+    public OrderDetailEntity getDetailByID(Long detailId) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        return entityManager.find(OrderDetailEntity.class, detailId);
     }
 
     @Override
-    public void addDetailToOrder(long orderId, OrderDetailEntity orderDetail) {
-
+    public void addDetailToOrder(Long orderId, OrderDetailEntity orderDetail) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        OrderEntity orderEntity = entityManager.find(OrderEntity.class, orderId);
+        orderEntity.getOrderDetailEntities().add(orderDetail);
+        transaction.begin();
+        entityManager.persist(orderEntity);
+        transaction.commit();
     }
 
     @Override
-    public boolean deleteDetailFromOrder(long orderId, long detailId) {
-        return false;
+    public void deleteDetailFromOrder(Long detailId) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        OrderDetailEntity orderDetailEntity = entityManager.find(OrderDetailEntity.class, detailId);
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.remove(orderDetailEntity);
+        transaction.commit();
     }
 }

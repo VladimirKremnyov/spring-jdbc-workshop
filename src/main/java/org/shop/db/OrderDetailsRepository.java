@@ -1,7 +1,6 @@
 package org.shop.db;
 
 import org.shop.db.entity.OrderDetailEntity;
-import org.shop.db.entity.OrderEntity;
 
 import java.util.List;
 
@@ -11,11 +10,11 @@ import java.util.List;
  */
 public interface OrderDetailsRepository {
 
-    List<OrderDetailEntity> getOrderDetailList(long orderId);
+    List<OrderDetailEntity> getOrderDetailList(Long orderId);
 
-    OrderDetailEntity getDetailByID (long orderId, long detailId);
+    OrderDetailEntity getDetailByID(Long detailId);
 
-    void addDetailToOrder (long orderId, OrderDetailEntity orderDetail);
+    void addDetailToOrder(Long orderId, OrderDetailEntity orderDetail);
 
-    boolean deleteDetailFromOrder (long orderId, long detailId);
+    void deleteDetailFromOrder(Long detailId);
 }

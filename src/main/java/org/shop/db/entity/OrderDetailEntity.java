@@ -1,32 +1,35 @@
 package org.shop.db.entity;
 
 
+import org.shop.dto.OrderDetailDto;
+
+import javax.persistence.*;
+import java.math.BigDecimal;
+
+@Entity
+@Table(name="order_details_table")
 public class OrderDetailEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id", nullable = false)
     private long detailId;
+
+    @Column(name="name", nullable = false)
     private String detailName;
-    private double price;
 
-    public OrderDetailEntity(long id, String name, double price) {
-        this.detailId = id;
+    @Column(name="price")
+    private BigDecimal price;
+
+    public OrderDetailEntity() {
+    }
+
+    public OrderDetailEntity(String name, BigDecimal price) {
         this.detailName = name;
         this.price = price;
     }
 
-    public OrderDetailEntity(String name, double price) {
-        this.detailName = name;
-        this.price = price;
-    }
-
-    public long getDetailId() {
-        return detailId;
-    }
-
-    public String getDetailName() {
-        return detailName;
-    }
-
-    public double getPrice() {
-        return price;
+    public OrderDetailDto toDetailDto() {
+        return new OrderDetailDto(detailId, detailName, price);
     }
 
     @Override
@@ -37,5 +40,4 @@ public class OrderDetailEntity {
                 ", price=" + price +
                 '}';
     }
-
 }

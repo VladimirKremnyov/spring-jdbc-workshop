@@ -13,10 +13,10 @@ public interface OrdersRepository {
 
     List<OrderEntity> getOrderList();
 
-    OrderEntity getOrderByID (long id);
+    OrderEntity getOrderByID (Long id);
 
     void addOrderToDB (OrderDto orderDto);
 
-    boolean deleteOrderFromDB (long id);
+    void deleteOrderFromDB (Long id);
 
 }
