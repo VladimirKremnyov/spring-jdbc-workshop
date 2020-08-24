@@ -7,21 +7,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name="order_table")
+@Table(name = "order_table")
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", nullable = false)
+    @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name="client", nullable = false)
+    @Column(name = "client", nullable = false)
     private String client;
 
     @JoinColumn(name = "orderID")
-    @OneToMany(cascade=CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetailEntity> orderDetailEntities;
 
     public OrderEntity() {
@@ -55,7 +55,7 @@ public class OrderEntity {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", client='" + client + '\'' + ", orderDetailEntities:\n" +
-                (orderDetailEntities.size()==0 ? "no details" : orderDetailEntities) +
+                (orderDetailEntities.size() == 0 ? "no details" : orderDetailEntities) +
                 "}";
     }
 }

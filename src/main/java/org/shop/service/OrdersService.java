@@ -12,7 +12,6 @@ public interface OrdersService {
     List<OrderDto> findAll();
 
     /**
-     *
      * @param id - order unique identifier
      * @return order and its' details
      */
@@ -20,7 +19,10 @@ public interface OrdersService {
 
     void saveOrder(OrderDto orderDto);
 
+    void updateOrder(OrderDto orderDto);
+
     void deleteOrder(long orderId);
+
 
 //     THESE methods should be implemented optionally only if you finished your task early
 //    /**

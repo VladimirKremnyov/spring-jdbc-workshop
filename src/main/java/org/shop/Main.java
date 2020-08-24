@@ -6,10 +6,12 @@ import org.shop.db.OrdersRepository;
 import org.shop.db.entity.OrderDetailEntity;
 import org.shop.dto.OrderDetailDto;
 import org.shop.dto.OrderDto;
+import org.shop.rest.spring.ApplicationContextConfig;
 import org.shop.service.OrdersService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -17,10 +19,9 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-
-        ApplicationContext context = new ClassPathXmlApplicationContext("spring/application-context.xml");
-//        OrdersRepository ordersRepository = context.getBean(OrdersRepository.class);
-        OrdersService ordersService = context.getBean(OrdersService.class);
+        ApplicationContext context = new AnnotationConfigApplicationContext(ApplicationContextConfig.class);
+        OrdersRepository ordersRepository = context.getBean(OrdersRepository.class);
+//        OrdersService ordersService = context.getBean(OrdersService.class);
 
 //        System.out.println(ordersRepository.getOrderByID(15l));
 //        System.out.println(ordersService.findOrderById(15));
@@ -33,7 +34,7 @@ public class Main {
 //        ordersService.saveOrder(orderDto);
 
 //        ordersRepository.deleteOrderFromDB(20l);
-        ordersService.deleteOrder(23);
+//        ordersService.deleteOrder(23);
 
 //        OrderDetailsRepository orderDetailsRepository = context.getBean(OrderDetailsRepository.class);
 
@@ -46,9 +47,9 @@ public class Main {
 
 //        orderDetailsRepository.deleteDetailFromOrder(38L);
 
-//        System.out.println(ordersRepository.getOrderList());
+        System.out.println(ordersRepository.findAllOrders());
 //        System.out.println(ordersRepository.getOrderByID(2L));
 //        System.out.println(ordersService.findOrderById(3));
-        System.out.println(ordersService.findAll());
+//        System.out.println(ordersService.findAll());
     }
 }

@@ -2,7 +2,6 @@ package org.shop.service;
 
 import org.junit.*;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.shop.db.OrdersRepository;
 import org.shop.dto.OrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,33 +22,41 @@ public class OrdersServiceImplTest {
     private OrdersRepository mockedOrdersRepository;
 
     @Test
-    public void shouldCallOnceMethodGetOrderListOfOrdersRepository() {
+    public void shouldCallMethodFindAllOrdersOfOrdersRepository() {
         ordersService.findAll();
-        verify(mockedOrdersRepository).getOrderList();
+        verify(mockedOrdersRepository).findAllOrders();
         verifyNoMoreInteractions(mockedOrdersRepository);
     }
 
     @Test
-    public void shouldCallOnceMethodGetOrderByIDofOrdersRepositoryWithExpectedParameter() {
+    public void shouldCallMethodFindOrderByIDofOrdersRepositoryWithExpectedParameter() {
         long randomId = new Random().nextLong();
         ordersService.findOrderById(randomId);
-        verify(mockedOrdersRepository).getOrderByID(randomId);
+        verify(mockedOrdersRepository).findOrderByID(randomId);
         verifyNoMoreInteractions(mockedOrdersRepository);
     }
 
     @Test
-    public void shouldCallOnceMethodAddOrderToDBwhenSaveOrder() {
+    public void shouldCallMethodAddOrderWhenSaveOrder() {
         OrderDto orderDto = mock(OrderDto.class);
         ordersService.saveOrder(orderDto);
-        verify(mockedOrdersRepository).addOrderToDB(orderDto);
+        verify(mockedOrdersRepository).addOrder(orderDto);
         verifyNoMoreInteractions(mockedOrdersRepository);
     }
 
     @Test
-    public void shouldCallOnceMethodDeleteOrderFromDBwhenDeleteOrderWithExpectedParameter() {
+    public void shouldCallMethodDeleteOrderWhenDeleteOrderWithExpectedParameter() {
         long randomId = new Random().nextLong();
         ordersService.deleteOrder(randomId);
-        verify(mockedOrdersRepository).deleteOrderFromDB(randomId);
+        verify(mockedOrdersRepository).deleteOrder(randomId);
+        verifyNoMoreInteractions(mockedOrdersRepository);
+    }
+
+    @Test
+    public void shouldCallMethodUpdateOrderOfOrdersRepositoryWhenUpdateOrder() {
+        OrderDto orderDto = mock(OrderDto.class);
+        ordersService.updateOrder(orderDto);
+        verify(mockedOrdersRepository).updateOrder(orderDto);
         verifyNoMoreInteractions(mockedOrdersRepository);
     }
 }

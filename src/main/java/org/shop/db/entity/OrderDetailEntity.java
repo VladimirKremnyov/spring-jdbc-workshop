@@ -7,17 +7,17 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name="order_details_table")
+@Table(name = "order_details_table")
 public class OrderDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", nullable = false)
+    @Column(name = "id", nullable = false)
     private long detailId;
 
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String detailName;
 
-    @Column(name="price")
+    @Column(name = "price")
     private BigDecimal price;
 
     public OrderDetailEntity() {

@@ -11,12 +11,14 @@ import java.util.List;
  */
 public interface OrdersRepository {
 
-    List<OrderEntity> getOrderList();
+    List<OrderEntity> findAllOrders();
 
-    OrderEntity getOrderByID (Long id);
+    OrderEntity findOrderByID(Long id);
 
-    void addOrderToDB (OrderDto orderDto);
+    void addOrder(OrderDto orderDto);
 
-    void deleteOrderFromDB (Long id);
+    void deleteOrder(Long id);
+
+    void updateOrder(OrderDto orderDto);
 
 }

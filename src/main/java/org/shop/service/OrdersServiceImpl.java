@@ -19,7 +19,7 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public List<OrderDto> findAll() {
-        return ordersRepository.getOrderList().stream()
+        return ordersRepository.findAllOrders().stream()
                 .map(OrderEntity::toOrderDto).sorted(Comparator.comparing(OrderDto::getId))
                 .collect(Collectors.toList());
     }
@@ -27,7 +27,7 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public OrderDto findOrderById(long id) {
         try {
-            return ordersRepository.getOrderByID(id).toOrderDto();
+            return ordersRepository.findOrderByID(id).toOrderDto();
         } catch (NullPointerException npe) {
             System.out.print("No such order in DB! ");
             return null;
@@ -36,11 +36,16 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public void saveOrder(OrderDto orderDto) {
-        ordersRepository.addOrderToDB(orderDto);
+        ordersRepository.addOrder(orderDto);
+    }
+
+    @Override
+    public void updateOrder(OrderDto orderDto) {
+        ordersRepository.updateOrder(orderDto);
     }
 
     @Override
     public void deleteOrder(long orderId) {
-        ordersRepository.deleteOrderFromDB(orderId);
+        ordersRepository.deleteOrder(orderId);
     }
 }

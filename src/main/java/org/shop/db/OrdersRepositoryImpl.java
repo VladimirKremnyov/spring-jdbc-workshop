@@ -19,19 +19,19 @@ public class OrdersRepositoryImpl implements OrdersRepository {
     }
 
     @Override
-    public List<OrderEntity> getOrderList() {
+    public List<OrderEntity> findAllOrders() {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         return entityManager.createQuery("from OrderEntity", OrderEntity.class).getResultList();
     }
 
     @Override
-    public OrderEntity getOrderByID(Long id) {
+    public OrderEntity findOrderByID(Long id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         return entityManager.find(OrderEntity.class, id);
     }
 
     @Override
-    public void addOrderToDB(OrderDto orderDto) {
+    public void addOrder(OrderDto orderDto) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -40,14 +40,22 @@ public class OrdersRepositoryImpl implements OrdersRepository {
     }
 
     @Override
-    public void deleteOrderFromDB(Long id) {
+    public void deleteOrder(Long id) {
         EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         entityManager.createQuery("delete from OrderEntity o where o.id=:orderId")
                 .setParameter("orderId", id).executeUpdate();
-//        OrderEntity orderEntity = entityManager.find(OrderEntity.class, id);
-//        entityManager.remove(orderEntity);
+        transaction.commit();
+    }
+
+    @Override
+    public void updateOrder(OrderDto orderDto) {
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        OrderEntity newOrder = orderDto.toOrderEntity();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        entityManager.merge(newOrder);
         transaction.commit();
     }
 }

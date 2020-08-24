@@ -13,6 +13,9 @@ public class OrderDetailDto {
     private String detailDtoName;
     private BigDecimal detailDtoPrice;
 
+    public OrderDetailDto() {
+    }
+
     public OrderDetailDto(String detailDtoName, BigDecimal detailDtoPrice) {
         this.detailDtoName = detailDtoName;
         this.detailDtoPrice = detailDtoPrice;

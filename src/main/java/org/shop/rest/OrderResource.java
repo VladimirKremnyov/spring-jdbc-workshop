@@ -12,7 +12,11 @@ public class OrderResource {
 
     private OrdersService ordersService;
 
-    @GetMapping//(produces = "application/json")
+    public OrderResource(OrdersService ordersService) {
+        this.ordersService = ordersService;
+    }
+
+    @GetMapping
     public List<OrderDto> findAll() {
         return ordersService.findAll();
     }
@@ -23,23 +27,17 @@ public class OrderResource {
     }
 
     @PostMapping
-    public void addOrder(OrderDto orderDto) {
-        System.out.println(ordersService.findAll());
+    public void addOrder(@RequestBody OrderDto orderDto) {
         ordersService.saveOrder(orderDto);
-        System.out.println("Added order: " + orderDto);
-        System.out.println(ordersService.findAll());
     }
 
     @PutMapping
     public void updateOrder(@RequestBody OrderDto orderDto) {
-        System.out.println("Updated order " + orderDto);
+        ordersService.updateOrder(orderDto);
     }
 
-    @DeleteMapping
-    public void deleteOrder(@RequestBody long id) {
-        System.out.println(ordersService.findAll());
+    @DeleteMapping(value = "{id}")
+    public void deleteOrder(@PathVariable("id") long id) {
         ordersService.deleteOrder(id);
-        System.out.println("Deleted order's ID " + id);
-        System.out.println(ordersService.findAll());
     }
 }
