@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
@@ -22,6 +22,13 @@
     <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
     <junit.version>4.11</junit.version>
     <mysql-connector-java.version>8.0.20</mysql-connector-java.version>
+    <spring-web.version>4.3.1.RELEASE</spring-web.version>
+    <spring-webmvc.version>4.3.1.RELEASE</spring-webmvc.version>
+    <mysql-connector-java.version>5.1.46</mysql-connector-java.version>
+    <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+    <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
+    <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+    <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
   </properties>
 
   <dependencies>
@@ -62,25 +69,15 @@
       <artifactId>mysql-connector-java</artifactId>
       <version>${mysql-connector-java.version}</version>
     </dependency>
-    <!--<dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.46</version>
-    </dependency>-->
-    <dependency>
+        <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-      <version>4.3.1.RELEASE</version>
+      <version>${spring-web.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>4.3.1.RELEASE</version>
-    </dependency>
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>5.1.46</version>
+      <version>${spring-webmvc.version}</version>
     </dependency>
   </dependencies>
 
@@ -90,12 +87,12 @@
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
           <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
+          <version>${maven-clean-plugin.version}</version>
         </plugin>
         <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
         <plugin>
           <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
+          <version>${maven-resources-plugin.version}</version>
         </plugin>
         <!--<plugin>
           <artifactId>maven-compiler-plugin</artifactId>
@@ -103,11 +100,11 @@
         </plugin>-->
         <plugin>
           <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
+          <version>${maven-surefire-plugin.version}</version>
         </plugin>
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
-          <version>3.0.2</version>
+          <version>${maven-jar-plugin.version}</version>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
