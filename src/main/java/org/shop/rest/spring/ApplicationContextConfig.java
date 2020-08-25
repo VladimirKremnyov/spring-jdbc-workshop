@@ -1,5 +1,6 @@
 package org.shop.rest.spring;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,15 +16,28 @@ import java.util.Properties;
 @ComponentScan("org.shop")
 @PropertySource(value = {"classpath:application.properties"})
 public class ApplicationContextConfig {
-    private static final String PROP_HIBERNATE_DIALECT = "db.hibernate.dialect";
-    private static final String PROP_HIBERNATE_SHOW_SQL = "db.hibernate.show_sql";
-    private static final String PROP_HIBERNATE_HBM2DDL_AUTO = "db.hibernate.hbm2ddl.auto";
+    @Value("${db.driver}")
+    private String propDbDriver;
+    @Value("${db.url}")
+    private String propDbUrl;
+    @Value("${db.username}")
+    private String propDbUserName;
+    @Value("${db.password}")
+    private String propDbPassword;
+    @Value("${db.hibernate.dialect}")
+    private String propHibernateDialect;
+    @Value("${db.hibernate.show_sql}")
+    private String propHibernateShowSql;
+    @Value("${db.hibernate.hbm2ddl.auto}")
+    private String propHibernateHbm2DdlAuto;
+    @Value("${db.entitymanager.packages.to.scan}")
+    private String propPackagesToScan;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
-        em.setPackagesToScan("org.shop");
+        em.setPackagesToScan(propPackagesToScan);
         em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         em.setJpaProperties(hibernateProperties());
         return em;
@@ -32,18 +46,18 @@ public class ApplicationContextConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/hw5_jdbc?serverTimezone=UTC");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setDriverClassName(propDbDriver);
+        dataSource.setUrl(propDbUrl);
+        dataSource.setUsername(propDbUserName);
+        dataSource.setPassword(propDbPassword);
         return dataSource;
     }
 
     private Properties hibernateProperties() {
         Properties properties = new Properties();
-        properties.put(PROP_HIBERNATE_DIALECT, "org.hibernate.dialect.MySQL5Dialect");
-        properties.put(PROP_HIBERNATE_SHOW_SQL, "true");
-        properties.put(PROP_HIBERNATE_HBM2DDL_AUTO, "validate");
+        properties.put("hibernateDialect", propHibernateDialect);
+        properties.put("hibernateShowSql", propHibernateShowSql);
+        properties.put("hibernateHbm2DdlAuto", propHibernateHbm2DdlAuto);
         return properties;
     }
 }
